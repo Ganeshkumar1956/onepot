@@ -1,6 +1,5 @@
 const db = require('../config/database');
 
-// Create Ingredient
 exports.createIngredient = (req, res) => {
     const { name } = req.body;
     const sql = `INSERT INTO Ingredients (name) VALUES (?)`;
@@ -13,7 +12,6 @@ exports.createIngredient = (req, res) => {
     });
 };
 
-// Get All Ingredients
 exports.getAllIngredients = (req, res) => {
     db.all(`SELECT * FROM Ingredients`, [], (err, rows) => {
         if (err) {
@@ -23,7 +21,6 @@ exports.getAllIngredients = (req, res) => {
     });
 };
 
-// Get Ingredient by ID
 exports.getIngredientById = (req, res) => {
     const { ingredient_id } = req.params;
 
@@ -38,7 +35,6 @@ exports.getIngredientById = (req, res) => {
     });
 };
 
-// Update Ingredient
 exports.updateIngredient = (req, res) => {
     const { ingredient_id, name, description } = req.body;
     const sql = `UPDATE Ingredients SET name = ?, updated_at = CURRENT_TIMESTAMP WHERE ingredient_id = ?`;
@@ -51,7 +47,6 @@ exports.updateIngredient = (req, res) => {
     });
 };
 
-// Delete Ingredient
 exports.deleteIngredient = (req, res) => {
     const { ingredient_id } = req.params;
 

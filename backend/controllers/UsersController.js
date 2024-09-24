@@ -1,8 +1,10 @@
 const db = require('../config/database');
+const crypto = require('crypto');
 
 // Create User
 exports.createUser = (req, res) => {
-    const { username, email, password_hash, profile_picture_url } = req.body;
+    const { username, email, password, profile_picture_url } = req.body;
+    const password_hash=crypto.createHash('md5').update(password).digest('hex');
     const sql = `INSERT INTO Users (username, email, password_hash, profile_picture_url) VALUES (?, ?, ?, ?)`;
     
     db.run(sql, [username, email, password_hash, profile_picture_url], function (err) {
@@ -12,6 +14,20 @@ exports.createUser = (req, res) => {
         return res.status(201).json({ user_id: this.lastID });
     });
 };
+
+exports.AuthUser=(req,res)=>{
+    const { username, password } = req.body;
+    const hashedPassword =crypto.createHash('md5').update(password).digest('hex');
+    db.get('SELECT * FROM Users WHERE username = ? AND password_hash = ?', [username, hashedPassword], (err, user) => {
+        if (err) {
+            return res.status(500).json({ message: 'Database error' });
+        }
+        if (!user) {
+            return res.status(400).json({ message: 'Incorrect username or password' });
+        }
+        return res.status(200).send("Authenticated Successfully");
+    });
+}
 
 // Get All Users
 exports.getUsers = (req, res) => {

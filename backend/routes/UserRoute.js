@@ -1,9 +1,11 @@
 const express=require('express');
-const {createUser,getUsers,getUserById,updateUser,deleteUser}=require('../controllers/UsersController');
+const {createUser,getUsers,AuthUser,getUserById,updateUser,deleteUser}=require('../controllers/UsersController');
 
 const UserRouter=express.Router();
 
 UserRouter.get('/', getUsers);
+
+UserRouter.post('/login',AuthUser);
 
 UserRouter.post('/', createUser);
 

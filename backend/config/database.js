@@ -20,7 +20,6 @@ const createTables = () => {
             user_id INTEGER NOT NULL,
             title TEXT NOT NULL,
             description TEXT,
-            ingredients TEXT,
             instructions TEXT,
             prep_time INTEGER,
             cook_time INTEGER,
@@ -58,7 +57,7 @@ const createTables = () => {
     const createTagsTable = `
         CREATE TABLE IF NOT EXISTS Tags (
             tag_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
+            tag_name TEXT NOT NULL,
             description TEXT
         );
     `;
